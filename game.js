@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   const infoDisplay = document.querySelector('#info')
   const userSquares = []
   const computerSquares = []
+  let isHorizontal = true
   const width = 10
 
   //Criar campo
@@ -55,7 +56,7 @@ document.addEventListener("DOMContentLoaded",()=>{
       ]
     },
     {
-      name:"battleship",
+      name:"battle",
       directions: [
         [0,1,2,3],
         [0,width,width*2,width*3]
@@ -95,7 +96,91 @@ document.addEventListener("DOMContentLoaded",()=>{
   generate(arrayNavios[4])
 
 
+//Rotacionar os Navios
 
+function rotate() {
+  if (isHorizontal) {
+    destroyer.classList.toggle('destroyer-container-vertical')
+    submarine.classList.toggle('submarine-container-vertical')
+    cruiser.classList.toggle('cruiser-container-vertical')
+    battleship.classList.toggle('battleship-container-vertical')
+    carrier.classList.toggle('carrier-container-vertical')
+    isHorizontal = false
+    return
+  }
+  if (!isHorizontal) {
+    destroyer.classList.toggle('destroyer-container-vertical')
+    submarine.classList.toggle('submarine-container-vertical')
+    cruiser.classList.toggle('cruiser-container-vertical')
+    battleship.classList.toggle('battleship-container-vertical')
+    carrier.classList.toggle('carrier-container-vertical')
+    isHorizontal = true
+    return
+  }
+}
+rotateButton.addEventListener('click', rotate)
+
+//Mover os navios do usuario
+ships.forEach(ship => ship.addEventListener('dragstart', dragStart))
+userSquares.forEach(square => square.addEventListener('dragstart', dragStart))
+userSquares.forEach(square => square.addEventListener('dragover', dragOver))
+userSquares.forEach(square => square.addEventListener('dragenter', dragEnter))
+userSquares.forEach(square => square.addEventListener('dragleave', dragLeave))
+userSquares.forEach(square => square.addEventListener('drop', dragDrop))
+userSquares.forEach(square => square.addEventListener('dragend', dragEnd))
+
+let selectedShipNameWithIndex
+let draggedShip
+let draggedShipLength
+
+
+ships.forEach(ship => ship.addEventListener('mousedown', (e) => {
+  selectedShipNameWithIndex = e.target.id
+}))
+
+function dragStart() {
+  draggedShip = this
+  draggedShipLength = this.childNodes.length
+}
+
+function dragOver(e) {
+  e.preventDefault()
+}
+
+function dragEnter(e) {
+  e.preventDefault()
+}
+
+function dragLeave() {
+}
+
+function dragDrop() {
+  let shipNameWithLastId = draggedShip.lastChild.id
+  let shipClass = shipNameWithLastId.slice(0, -2)
+
+  let lastShipIndex = parseInt(shipNameWithLastId.substr(-1))
+  let shipLastId = lastShipIndex + parseInt(this.dataset.id)
+
+
+  selectedShipIndex = parseInt(selectedShipNameWithIndex.substr(-1))
+
+  shipLastId = shipLastId - selectedShipIndex
+
+  if (isHorizontal) {
+    for (let i=0; i < draggedShipLength; i++) {
+      userSquares[parseInt(this.dataset.id) - selectedShipIndex + i].classList.add('taken', shipClass)
+    }
+  } else if (!isHorizontal) {
+    for (let i=0; i < draggedShipLength; i++) {
+      userSquares[parseInt(this.dataset.id) - selectedShipIndex + width*i].classList.add('taken',shipClass)
+    }
+  } else return
+
+  displayGrid.removeChild(draggedShip)
+}
+
+function dragEnd() {
+}
 
 
 })
