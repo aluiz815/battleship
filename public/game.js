@@ -19,6 +19,10 @@ document.addEventListener("DOMContentLoaded",()=>{
   let currentPlayer = 'user'
   const width = 10
 
+  //Conexao com socket.io
+  const socket = io()
+
+
   //Criar campo
 
   function criarCampo(grid,squares) {

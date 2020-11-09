@@ -1,0 +1,17 @@
+{
+  "name": "batalha_naval",
+  "version": "1.0.0",
+  "description": "jogo de batalha naval",
+  "main": "index.js",
+  "repository": "https://github.com/aluiz815/battleship.git",
+  "author": "Andre Luiz",
+  "scripts": {
+    "dev":"nodemon src/server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.6",
+    "socket.io": "^3.0.0"
+  }
+}
