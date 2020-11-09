@@ -9,11 +9,22 @@
   <script src="./game.js"></script>
 </head>
 <body>
+  <div class="player p1">
+    Jogador 1
+    <div class="connected">Conectado <span></span></div>
+    <div class="ready">Pronto<span></span></div>
+  </div>
+  <div class="player p2">
+    Jogador 2
+    <div class="connected">Conectado <span></span></div>
+    <div class="ready">Pronto<span></span></div>
+  </div>
   <div class="container">
     <div class="grid grid-user"></div>
     <div class="grid grid-computer"></div>
   </div>
   <div class="hidden-info">
+    <button id="connect">Conectar</button>
     <button id="start">Comecar</button>
     <button id="rotate">Rotacione seus navios</button>
     <h3 id="whose-go">Sua vez</h3>
